@@ -1,9 +1,10 @@
 # from sre_constants import SUCCESS
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from pip import main
 from sqlalchemy import false, true
 from flask_mail import Mail, Message
 from second import second
+# from second1 import second1
 from config import mail_username, mail_password
 from sqlalchemy import true
 from flask_sqlalchemy import SQLAlchemy
@@ -15,20 +16,22 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
 
-# currentlocation = os.path.dirname(os.pathe.abspath(__file__))
+currentlocation = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__)
+db = SQLAlchemy(app)
 
 sales = pd.read_csv('static/csv/supermarket_sales.csv')
-
 Mum = pd.read_csv('static/csv/Mumbai Sales_Analysis.csv')
-
 Del = pd.read_csv('static/csv/Delhi Sales_Analysis.csv')
-
 Bang = pd.read_csv('static/csv/Bangalore Sales_Analysis.csv') 
 
 app.register_blueprint(second,url_prefix="")
 # app.register_blueprint(second1,url_prefix="")
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
+app.config['SECRET_KEY'] = 'thisisasecretkey'
 
 app.config['MAIL_SERVER'] = "smtp-mail.outlook.com"
 app.config['MAIL_PORT'] = 587
@@ -75,37 +78,26 @@ def aboutUs():
 @app.route("/login")
 def login():
     return render_template('Login.html')   
-database = {'akshit':'123654','vedant':'654789','shweta':'789654'}
-
 
 @app.route('/dashboard', methods=['POST', 'GET'] )
 def dashboard():
     if request.method == "POST" :
         name1 = request.form['username1']
         pwd = request.form['password1']
+        sqlconnection = sqlite3.Connection(currentlocation + "./login.db")        
+        
+        cursor = sqlconnection.cursor()
+        query1 = "SELECT username, password from User WHERE username = '{un}' AND password = '{pw}'".format(un = name1, pw = pwd)
 
-    # sqlconnection = sqlite3.Connection(currentlocation + "./login.db")
-    # cursor = sqlconnection.cursor()
-    # query1 = "SELECT username, password from Users WHERE username = '{un}' AND password = '{pw}'".format(un = name1, pw = pwd)
+        rows = cursor.execute(query1)
+        rows = rows.fetchall()
 
-    # rows = cursor.execute(query1)
-    # rows = rows.fetchall()
-    # if len(rows) == 1:
-    #     return render_template('login.html')
-
-        if name1 not in database:
-            return render_template('Login.html', info ='Invalid User')
-        else:
-            if database[name1]!=pwd:
-                return render_template('Login.html', info = "Invalid Password")
-            else:
-                return render_template('dashboard.html', name = name1, Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
-                Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s)
-    
-    return render_template('dashboard.html',
-    Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
-    Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s)
-
+    if len(rows) == 1:
+        return render_template('dashboard.html', name = name1, Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
+            Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s) 
+    else:
+        error = "invalid password"  
+        return redirect("/login")
 
 
 ##################################### QUERY 1 #################################
