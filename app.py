@@ -20,7 +20,6 @@ matplotlib.use('Agg')
 currentlocation = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__)
-db = SQLAlchemy(app)
 
 sales = pd.read_csv('static/csv/supermarket_sales.csv')
 Mum = pd.read_csv('static/csv/Mumbai Sales_Analysis.csv')
@@ -31,21 +30,16 @@ app.register_blueprint(second,url_prefix="")
 # app.register_blueprint(second1,url_prefix="")
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/akshit/Desktop/Final/login.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'thisisasecretkey'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/akshit/Desktop/Final/login.db'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+app.config['SECRET_KEY'] = 'thisisasecretkey'
 app.config['MAIL_SERVER'] = "smtp-mail.outlook.com"
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSl'] = False
 app.config['MAIL_USERNAME'] = mail_username
 app.config['MAIL_PASSWORD'] = mail_password
-
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False, unique=True)
-    password = db.Column(db.String(80), nullable=False)
 
 mail = Mail(app)
 
