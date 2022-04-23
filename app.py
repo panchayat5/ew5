@@ -30,7 +30,7 @@ app.register_blueprint(second,url_prefix="")
 # app.register_blueprint(second1,url_prefix="")
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:login.db:'
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 
 app.config['MAIL_SERVER'] = "smtp-mail.outlook.com"
@@ -94,7 +94,7 @@ def dashboard():
 
     if len(rows) == 1:
         return render_template('dashboard.html', name = name1, Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
-            Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s) 
+            Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s , success = True) 
     else:
         error = "invalid password"  
         return redirect("/login")
