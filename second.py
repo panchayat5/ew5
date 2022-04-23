@@ -356,7 +356,7 @@ plt.savefig('static/graph_Img/Bangalore_Graph/Total_Time.png')
 
 
 
-bpl=dict()
+# bpl=dict()
 
 #monthlysales--------------------------------------------------
 bmp=Bang.groupby('Month')['Total'].sum()

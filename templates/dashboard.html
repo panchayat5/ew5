@@ -159,7 +159,7 @@
 					<li>
 						<i class='bx bx-food-menu'></i>
 						<span class="text">
-							<h3>Food and Beverages</h3>
+							<h3>{{ ProductLine }}</h3>
 							<p>Best Product line</p>
 						</span>
 					</li>
@@ -178,6 +178,7 @@
 						</span>
 						</li>
 				</ul>
+				
 				<div class="table-data">
 					<div class="order">
 						<div class="head">
@@ -199,6 +200,7 @@
 						<div class="inside_graph" id="mum_q2">
 							<div class="img">
 								<!-- <img id="graph" src={{ T2 }} alt = "City"> -->
+								<img id="graph" src="static/img/image_default.jpg">
 							</div>		
 							<div class="imp_points">
 								<p class="imppoints">Best city in term of Sales was: {{ BestCity }}</p>
@@ -212,12 +214,10 @@
 								<p class="imppoints">Best Time in term of Sales was: {{ SalesByH }}</p>
 							</div>							
 						</div>
-
 						<div class="inside_graph" id="mum_q4">
 							<div class="img">
 								<img id="graph" src={{ Q4 }} >
 							</div>
-		
 							<div class="imp_points">
 								<p class="imppoints">Best Product Line in term of Sales was:{{ ProductLine }}</p>
 							</div>							
@@ -225,6 +225,7 @@
 						<div class="inside_graph" id="mum_q5">
 							<div class="img">
 								<!-- <img id="graph" src={{ Q5 }} > -->
+								<img id="graph" src="static/img/image_default.jpg">
 							</div>		
 							<div class="imp_points">
 								<p class="imppoints">Most Customer in term of Sales were: {{ Member }}</p>
@@ -233,8 +234,8 @@
 						<div class="inside_graph" id="mum_q6">
 							<div class="img">
 								<!-- <img id="graph" src={{ Q6 }} > -->
+								<img id="graph" src="static/img/image_default.jpg">
 							</div>
-		
 							<div class="imp_points">
 								<p class="imppoints">Most Preferred mode of Payment in terms of Sales was: {{ Payment }}</p>
 							</div>
@@ -248,7 +249,7 @@
 							<i class='bx bx-filter' ></i>
 						</div>
 						<ul class="todo-list">
-							<a  href="#">
+							<a  href="">
 								<li class="not-completed">
 									<p id="query1">Monthly Sales</p>
 									<i class='bx bx-dots-vertical-rounded' ></i>
