@@ -4,6 +4,7 @@ from pip import main
 from sqlalchemy import false, true
 from flask_mail import Mail, Message
 from second import second
+from flask_login import UserMixin
 # from second1 import second1
 from config import mail_username, mail_password
 from sqlalchemy import true
@@ -30,7 +31,8 @@ app.register_blueprint(second,url_prefix="")
 # app.register_blueprint(second1,url_prefix="")
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/akshit/Desktop/Final/login.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 
 app.config['MAIL_SERVER'] = "smtp-mail.outlook.com"
@@ -40,6 +42,10 @@ app.config['MAIL_USE_SSl'] = False
 app.config['MAIL_USERNAME'] = mail_username
 app.config['MAIL_PASSWORD'] = mail_password
 
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False, unique=True)
+    password = db.Column(db.String(80), nullable=False)
 
 mail = Mail(app)
 
