@@ -30,7 +30,7 @@ app.register_blueprint(second,url_prefix="")
 # app.register_blueprint(second1,url_prefix="")
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:login.db:'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 
 app.config['MAIL_SERVER'] = "smtp-mail.outlook.com"
