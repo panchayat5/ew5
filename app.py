@@ -77,6 +77,10 @@ def aboutUs():
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
+    return render_template('Login.html')   
+
+@app.route('/dashboard', methods=['POST', 'GET'] )
+def dashboard():
     if request.method == "POST" :
         name1 = request.form['username1']
         pwd = request.form['password1']
@@ -89,31 +93,11 @@ def login():
         rows = rows.fetchall()
 
     if len(rows) == 1:
-         return redirect("/dashboard")
-    else:
-        error = "invalid password"  
-        # return redirect("/login")
-    return render_template('Login.html')   
-
-@app.route('/dashboard', methods=['POST', 'GET'] )
-def dashboard():
-    # if request.method == "POST" :
-    #     name1 = request.form['username1']
-    #     pwd = request.form['password1']
-    #     sqlconnection = sqlite3.Connection(currentlocation + "./login.db")        
-        
-    #     cursor = sqlconnection.cursor()
-    #     query1 = "SELECT username, password from User WHERE username = '{un}' AND password = '{pw}'".format(un = name1, pw = pwd)
-
-    #     rows = cursor.execute(query1)
-    #     rows = rows.fetchall()
-
-    # if len(rows) == 1:
         return render_template('dashboard.html', Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
             Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s) 
-    # else:
-    #     error = "invalid password"  
-    #     return redirect("/login")
+    else:
+        error = "invalid password"  
+        return redirect("/login")
 
 
 ##################################### QUERY 1 #################################
