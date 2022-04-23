@@ -84,7 +84,7 @@ def dashboard():
     if request.method == "POST" :
         name1 = request.form['username1']
         pwd = request.form['password1']
-        sqlconnection = sqlite3.Connection(currentlocation + "./login.db")        
+        sqlconnection = sqlite3.Connection(currentlocation + "\login.db")        
         
         cursor = sqlconnection.cursor()
         query1 = "SELECT username, password from User WHERE username = '{un}' AND password = '{pw}'".format(un = name1, pw = pwd)
