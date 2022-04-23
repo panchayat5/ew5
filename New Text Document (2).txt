@@ -1,0 +1,12 @@
+* After doing some changes in the file.
+ 
+git add .
+git commit -m "first commit"
+git push -u origin main
+
+* heroku login
+
+heroku login
+git push heroku main
+
+DONE
