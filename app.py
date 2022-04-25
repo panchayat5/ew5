@@ -118,19 +118,7 @@ def dashboard():
 
 
 ##################################### QUERY 1 #################################
-
-Mumbai = sales.loc[sales['City'] == 'MUMBAI'].Total.sum().astype(int)
-Delhi = sales.loc[sales['City'] == 'DELHI'].Total.sum().astype(int)
-Bangalore = sales.loc[sales['City'] == 'BANGALORE'].Total.sum().astype(int)
-
-labels = ['Mumbai', 'Delhi', 'Bangalore']
-colors = ['#4755a6', '#6da32f']
-explode = (0.1,0.1,0.1)
-
-plt.pie([Delhi,Mumbai,Bangalore], labels = labels, explode = explode, autopct = '%.2f %%', radius=1.5,textprops={'fontsize': 15} )
-
-plt.savefig('static/graph_Img/Total_Sales/City.png')
-# 
+ 
 
 Total_Sales = sales.groupby('Month').Total.sum()
 months = range(1,4)
