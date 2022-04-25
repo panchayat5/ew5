@@ -4,7 +4,6 @@ from pip import main
 from sqlalchemy import false, true
 from flask_mail import Mail, Message
 from second import second
-from flask_login import UserMixin
 # from second1 import second1
 from config import mail_username, mail_password
 from sqlalchemy import true
@@ -33,7 +32,7 @@ app.register_blueprint(second,url_prefix="")
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/akshit/Desktop/Final/login.db'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.config['SECRET_KEY'] = 'thisisasecretkey'
+# app.config['SECRET_KEY'] = 'thisisasecretkey'
 app.config['MAIL_SERVER'] = "smtp-mail.outlook.com"
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
@@ -42,7 +41,6 @@ app.config['MAIL_USERNAME'] = mail_username
 app.config['MAIL_PASSWORD'] = mail_password
 
 mail = Mail(app)
-
 
 @app.route("/", methods = ['GET'])
 @app.route("/index", methods = ['GET'])
@@ -78,26 +76,40 @@ def aboutUs():
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     return render_template('Login.html')   
+database = {'akshit':'123654','vedant':'654789','shweta':'789654'}
 
 @app.route('/dashboard', methods=['POST', 'GET'] )
 def dashboard():
     if request.method == "POST" :
         name1 = request.form['username1']
         pwd = request.form['password1']
-        sqlconnection = sqlite3.Connection(currentlocation + "\login.db")        
+
+        if name1 not in database:
+            return render_template('Login.html', info ='Invalid User')
+        else:
+            if database[name1]!=pwd:
+                return render_template('Login.html', info = "Invalid Password")
+            else:
+                return render_template('dashboard.html', Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
+                Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s)
+    
+    return render_template('dashboard.html',Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
+    Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s)
+
+    #     sqlconnection = sqlite3.Connection(currentlocation + "\login.db")        
         
-        cursor = sqlconnection.cursor()
-        query1 = "SELECT username, password from User WHERE username = '{un}' AND password = '{pw}'".format(un = name1, pw = pwd)
+    #     cursor = sqlconnection.cursor()
+    #     query1 = "SELECT username, password from User WHERE username = '{un}' AND password = '{pw}'".format(un = name1, pw = pwd)
 
-        rows = cursor.execute(query1)
-        rows = rows.fetchall()
+    #     rows = cursor.execute(query1)
+    #     rows = rows.fetchall()
 
-    if len(rows) == 1:
-        return render_template('dashboard.html', Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
-            Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s) 
-    else:
-        error = "invalid password"  
-        return redirect("/login")
+    # if len(rows) == 1:
+    #     return render_template('dashboard.html', Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
+    #         Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s) 
+    # else:
+    #     error = "invalid password"  
+    #     return redirect("/login")
 
 
 ##################################### QUERY 1 #################################
