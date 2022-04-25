@@ -1,5 +1,7 @@
 # from sre_constants import SUCCESS
+from http.client import _HTTPConnectionProtocol
 from flask import Flask, render_template, request, redirect
+from matplotlib import testing
 from pip import main
 from sqlalchemy import false, true
 from flask_mail import Mail, Message
@@ -30,6 +32,7 @@ Bang = pd.read_csv('static/csv/Bangalore Sales_Analysis.csv')
 app.register_blueprint(second,url_prefix="")
 # app.register_blueprint(second1,url_prefix="")
 
+# testing kya hotti h white box and black box testing
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/akshit/Desktop/Final/login.db'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
