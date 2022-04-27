@@ -5,18 +5,19 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-
 second = Blueprint("second", __name__, static_folder="static", template_folder="templates")
 
+sheet_id = '1n-PCzdDFA6Fb_MUR-ZtMDR_tquzrxWNxqSHHX258rU8'
 
-sales = pd.read_csv('static/csv/supermarket_sales.csv')
+sales = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv")
 
-Mum = pd.read_csv('static/csv/Mumbai Sales_Analysis.csv')
+filter1 = sales["City"]=="MUMBAI"
+filter2 = sales["City"]=="DELHI"
+filter3 = sales["City"]=="BANGALORE"
 
-Del = pd.read_csv('static/csv/Delhi Sales_Analysis.csv')
-
-Bang = pd.read_csv('static/csv/Bangalore Sales_Analysis.csv')           
-
+Mum = sales.where(filter1)
+Del = sales.where(filter2)
+Bang = sales.where(filter3)
 
 @second.route("/mumbai")
 def mumbai():

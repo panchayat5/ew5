@@ -1,5 +1,4 @@
 # from sre_constants import SUCCESS
-# from http.client import _HTTPConnectionProtocol
 from flask import Flask, render_template, request, redirect
 from matplotlib import testing
 from pip import main
@@ -22,12 +21,20 @@ matplotlib.use('Agg')
 
 currentlocation = os.path.dirname(os.path.abspath(__file__))
 
+sheet_id = '1n-PCzdDFA6Fb_MUR-ZtMDR_tquzrxWNxqSHHX258rU8'
+
+sales = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv")
+
 app = Flask(__name__)
 
-sales = pd.read_csv('static/csv/supermarket_sales.csv')
-Mum = pd.read_csv('static/csv/Mumbai Sales_Analysis.csv')
-Del = pd.read_csv('static/csv/Delhi Sales_Analysis.csv')
-Bang = pd.read_csv('static/csv/Bangalore Sales_Analysis.csv') 
+filter1 = sales["City"]=="MUMBAI"
+filter2 = sales["City"]=="DELHI"
+filter3 = sales["City"]=="BANGALORE"
+
+Mum = sales.where(filter1)
+Del = sales.where(filter2)
+Bang = sales.where(filter3)
+
 
 app.register_blueprint(second,url_prefix="")
 # app.register_blueprint(second1,url_prefix="")
@@ -82,6 +89,7 @@ def aboutUs():
 def login():
     return render_template('Login.html')   
 database = {'akshit':'123654','vedant':'654789','shweta':'789654'}
+
 
 @app.route('/dashboard', methods=['POST', 'GET'] )
 def dashboard():
