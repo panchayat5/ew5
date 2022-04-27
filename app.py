@@ -1,6 +1,6 @@
 # from sre_constants import SUCCESS
 from flask import Flask, render_template, request, redirect
-from matplotlib import testing
+# from matplotlib import testing
 from pip import main
 from sqlalchemy import false, true
 from flask_mail import Mail, Message
@@ -106,7 +106,7 @@ def dashboard():
                 return render_template('dashboard.html', Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
                 Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s)
     
-    return render_template('dashboard.html',Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
+    return render_template('dashboard.html', Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
     Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s)
 
     #     sqlconnection = sqlite3.Connection(currentlocation + "\login.db")        
@@ -154,15 +154,15 @@ plt.savefig('static/graph_Img/Total_Sales/Month.png')
 # Mumbai = sales.loc[sales['City'] == 'MUMBAI'].count()[0]
 # Bangalore = sales.loc[sales['City'] == 'BANGALORE'].count()[0]
 
-# Mumbai = sales.loc[sales['City'] == 'MUMBAI'].Total.sum().astype(int)
-# Delhi = sales.loc[sales['City'] == 'DELHI'].Total.sum().astype(int)
-# Bangalore = sales.loc[sales['City'] == 'BANGALORE'].Total.sum().astype(int)
+# M = sales.loc[sales['City'] == 'MUMBAI'].Total.sum().astype(int)
+# D = sales.loc[sales['City'] == 'DELHI'].Total.sum().astype(int)
+# B = sales.loc[sales['City'] == 'BANGALORE'].Total.sum().astype(int)
 
 # labels = ['Mumbai', 'Delhi', 'Bangalore']
 # colors = ['#4755a6', '#6da32f']
 # explode = (0.1,0.1,0.1)
 
-# plt.pie([Delhi,Mumbai,Bangalore], labels = labels, explode = explode, autopct = '%.2f %%', radius=1.5,textprops={'fontsize': 15} )
+# plt.pie([M,D,B], labels = labels, explode = explode, autopct = '%.2f %%', radius=1.5,textprops={'fontsize': 15} )
 
 # plt.savefig('static/graph_Img/Total_Sales/City.png')
 
@@ -363,4 +363,4 @@ def settings():
 # plt.savefig('static/images/Month.png')  
 
 if __name__ == '__main__':
-    app.run(debug=true,port = 112)
+    app.run(debug=false,port = 112)
