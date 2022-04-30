@@ -1,6 +1,6 @@
 # from sre_constants import SUCCESS
 from flask import Flask, render_template, request, redirect
-# from matplotlib import testing
+from matplotlib import testing
 from pip import main
 from sqlalchemy import false, true
 from flask_mail import Mail, Message
@@ -90,39 +90,26 @@ def login():
     return render_template('Login.html')   
 database = {'akshit':'123654','vedant':'654789','shweta':'789654'}
 
-
 @app.route('/dashboard', methods=['POST', 'GET'] )
 def dashboard():
     if request.method == "POST" :
-        name1 = request.form['username1']
-        pwd = request.form['password1']
+        name = request.form['name']
+        password = request.form['password']
 
-        if name1 not in database:
-            return render_template('Login.html', info ='Invalid User')
-        else:
-            if database[name1]!=pwd:
-                return render_template('Login.html', info = "Invalid Password")
-            else:
-                return render_template('dashboard.html', Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
-                Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s)
-    
-    return render_template('dashboard.html', Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
-    Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s)
+        connection = sqlite3.connect('Login.db')
+        cursor = connection.cursor()
 
-    #     sqlconnection = sqlite3.Connection(currentlocation + "\login.db")        
+        query1 = "SELECT name, password from Login WHERE name = '"+name+"' AND password = '"+password+"'"
+        cursor.execute(query1)
+        results = cursor.fetchall()
         
-    #     cursor = sqlconnection.cursor()
-    #     query1 = "SELECT username, password from User WHERE username = '{un}' AND password = '{pw}'".format(un = name1, pw = pwd)
-
-    #     rows = cursor.execute(query1)
-    #     rows = rows.fetchall()
-
-    # if len(rows) == 1:
-    #     return render_template('dashboard.html', Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
-    #         Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s) 
-    # else:
-    #     error = "invalid password"  
-    #     return redirect("/login")
+        if len(results) == 1:
+            return render_template('dashboard.html', USER_NAME = name, Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', 
+            Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s)
+        else:
+                # error = "invalid password"  
+            return redirect("/login")
+    return render_template('dashboard.html', USER_NAME = name, Q1 ='static/graph_Img/Total_Sales/Month.png', T2 = 'static/graph_Img/Total_Sales/City.png', Q3 = 'static/graph_Img/Total_Sales/Time.png', Q4 = 'static/graph_Img/Total_Sales/Product.png' ,Q5 = 'static/graph_Img/Total_Sales/Customer.png',Q6 = 'static/graph_Img/Total_Sales/Payment.png' , ProductLine = bpl, BestMonth = bms, BestCity = bcs, Member = mvn, Payment = ppm, SalesByH = sbh_s)
 
 
 ##################################### QUERY 1 #################################
@@ -154,15 +141,15 @@ plt.savefig('static/graph_Img/Total_Sales/Month.png')
 # Mumbai = sales.loc[sales['City'] == 'MUMBAI'].count()[0]
 # Bangalore = sales.loc[sales['City'] == 'BANGALORE'].count()[0]
 
-# M = sales.loc[sales['City'] == 'MUMBAI'].Total.sum().astype(int)
-# D = sales.loc[sales['City'] == 'DELHI'].Total.sum().astype(int)
-# B = sales.loc[sales['City'] == 'BANGALORE'].Total.sum().astype(int)
+# Mumbai = sales.loc[sales['City'] == 'MUMBAI'].Total.sum().astype(int)
+# Delhi = sales.loc[sales['City'] == 'DELHI'].Total.sum().astype(int)
+# Bangalore = sales.loc[sales['City'] == 'BANGALORE'].Total.sum().astype(int)
 
 # labels = ['Mumbai', 'Delhi', 'Bangalore']
 # colors = ['#4755a6', '#6da32f']
 # explode = (0.1,0.1,0.1)
 
-# plt.pie([M,D,B], labels = labels, explode = explode, autopct = '%.2f %%', radius=1.5,textprops={'fontsize': 15} )
+# plt.pie([Delhi,Mumbai,Bangalore], labels = labels, explode = explode, autopct = '%.2f %%', radius=1.5,textprops={'fontsize': 15} )
 
 # plt.savefig('static/graph_Img/Total_Sales/City.png')
 
@@ -363,4 +350,4 @@ def settings():
 # plt.savefig('static/images/Month.png')  
 
 if __name__ == '__main__':
-    app.run(debug=false,port = 112)
+    app.run(debug=true,port = 112)

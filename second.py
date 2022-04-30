@@ -14,7 +14,7 @@ sales = pd.read_csv(f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?f
 filter1 = sales["City"]=="MUMBAI"
 filter2 = sales["City"]=="DELHI"
 filter3 = sales["City"]=="BANGALORE"
-
+  
 Mum = sales.where(filter1)
 Del = sales.where(filter2)
 Bang = sales.where(filter3)
